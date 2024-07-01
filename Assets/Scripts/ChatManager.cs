@@ -14,6 +14,9 @@ public class ChatManager : MonoBehaviour
     private bool NameBoxChecker;
     public int ScenceHistory;
     private int choseCount = 0;
+    public GameObject choiceobject;
+    private bool choseopen = true;
+    private int cheack;
     
     public string writerText = "";
 
@@ -57,156 +60,169 @@ public class ChatManager : MonoBehaviour
     public IEnumerator ChoiceText()
     {
        
-            Debug.Log("¼±ÅÃÁö ÁøÀÔ");
+        Debug.Log("ì„ íƒì§€ ì§„ì…");
             
-            StartCoroutine(NormalChat("", "a. ¿µÈ­°üÀ» °£´Ù \r\nb. ½ÃÀåÀ» °£´Ù.", 0));
-            while (choseCount < 2)
+    
+        cheack = 1;
+        while (choseCount < 2)
+        {
+            GameManager.Instance.backGroundImage.sprite = GameManager.Instance.backGround[0];
+            if (Input.GetKeyDown(KeyCode.A))
             {
-
-
-                GameManager.Instance.backGroundImage.sprite = GameManager.Instance.backGround[0];
-                if (Input.GetKeyDown(KeyCode.A))
+                choseCount++;
+                GameManager.Instance.backGroundImage.sprite = GameManager.Instance.backGround[4];
+                yield return StartCoroutine(NormalChat("", "ì›ë˜ ë³´ê³  ì‹¶ì—ˆë˜ ìµœì‹  ì˜í™”ë¥¼ ê³µì§œë¡œ ì‹¤ì»· ë´¤ë‹¤.", 0));
+                if (choseCount == 1)
                 {
-                    choseCount++;
-                    GameManager.Instance.backGroundImage.sprite = GameManager.Instance.backGround[4];
-                    yield return StartCoroutine(NormalChat("", "¿ø·¡ º¸°í ½Í¾ú´ø ÃÖ½Å ¿µÈ­¸¦ °øÂ¥·Î ½ÇÄÆ ºÃ´Ù.", 0));
-                    yield return StartCoroutine(NormalChat("", "a. ¿µÈ­°üÀ» °£´Ù \r\nb. ½ÃÀåÀ» °£´Ù.", 0));
-
+                    StartCoroutine(NormalChat("", "a. ì˜í™”ê´€ì„ ê°„ë‹¤ \r\nb. ì‹œì¥ì„ ê°„ë‹¤.", 0));
+                    ChatText.text = "";
                 }
-
-                if (Input.GetKeyDown(KeyCode.B))
-                {
-                    choseCount++;
-                    GameManager.Instance.backGroundImage.sprite = GameManager.Instance.backGround[0];
-                    yield return StartCoroutine(NormalChat("", "¼Ò¹®³­ ¸ÀÁı¿¡ ´ß°­Á¤À» ÁÙ ¾È¼­°í ¸ô·¡ ¸Ô¾ú´Ù.", 0));
-                    yield return StartCoroutine(NormalChat("", "a. ¿µÈ­°üÀ» °£´Ù \r\nb. ½ÃÀåÀ» °£´Ù.", 0));
-                    
-                }
-
-                yield return null;
             }
+
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                choseCount++;
+                GameManager.Instance.backGroundImage.sprite = GameManager.Instance.backGround[0];
+                yield return StartCoroutine(NormalChat("", "ì†Œë¬¸ë‚œ ë§›ì§‘ì— ë‹­ê°•ì •ì„ ì¤„ ì•ˆì„œê³  ëª°ë˜ ë¨¹ì—ˆë‹¤.", 0));
+                if (choseCount == 1)
+                {
+                    yield return (NormalChat("", "a. ì˜í™”ê´€ì„ ê°„ë‹¤ \r\nb. ì‹œì¥ì„ ê°„ë‹¤.", 0));
+                    ChatText.text = "";
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                StartCoroutine(NormalChat("", "a. ì˜í™”ê´€ì„ ê°„ë‹¤ \r\nb. ì‹œì¥ì„ ê°„ë‹¤.", 0));
+                ChatText.text = "";
+            }
+
+            yield return null;
+        }
 
     }
     IEnumerator TextPractice()
     {
         GameManager.Instance.image1.sprite = GameManager.Instance.naYuNa[4];
         AudioManager.instance.PlaySfx(AudioManager.Sfx.ass2);
-        //¹è°æÀ½¾Ç
-        yield return StartCoroutine(NormalChat("³ªÀ¯³ª", "¿Àºü ¹äÂÍ ¸ÔÀ¸·¯ ³ª¿Í\r\nÀú¹øÃ³·³ Áö°¢ ÇÏÁö ¸»°í",1));
-        yield return StartCoroutine(NormalChat("³ªÀ¯³ª", " ±×¸®°í ³ª ¿ëµ· ¶³¾îÁ³¾î °±À»°Ô",1));
-        yield return StartCoroutine(NormalChat("³ªÀ¯³ª", "4500¿ø ¸¸ ~ ÃòÆÄÃä½º »ç¸Ô°Ô~",1));
+        //ë°°ê²½ìŒì•…
+        yield return StartCoroutine(NormalChat("ë‚˜ìœ ë‚˜", "ì˜¤ë¹  ë°¥ ì¢€ ë¨¹ìœ¼ëŸ¬ ë‚˜ì™€\r\nì €ë²ˆì²˜ëŸ¼ ì§€ê°í•˜ì§€ ë§ê³ ",1));
+        yield return StartCoroutine(NormalChat("ë‚˜ìœ ë‚˜", " ê·¸ë¦¬ê³  ë‚˜ ìš©ëˆ ë–¨ì–´ì¡Œì–´ ê°šì„ê²Œ.",1));
+        yield return StartCoroutine(NormalChat("ë‚˜ìœ ë‚˜", "4,500ì›ë§Œ ~ ì¸„íŒŒì¶¥ìŠ¤ ì‚¬ ë¨¹ê²Œ~",1));
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[2];
         ColorSet(1);
         GameManager.Instance.image2.color = new Color(255, 255, 255,1f);
-        yield return StartCoroutine(NormalChat("³ªÅÂÇö", "¾Æ ¾ÈµÅ µÅÁö¾Æ",1));
+        yield return StartCoroutine(NormalChat("ë‚˜íƒœí˜„", "ì•„ ì•ˆë¼ ë¼ì§€ì•¼",1));
         GameManager.Instance.image1.sprite = GameManager.Instance.naYuNa[3];
         ColorSet(2);
-        GameManager.Instance.image2.color = new Color(255, 255, 255,1f);
+        
 
-        yield return StartCoroutine(NormalChat("³ªÀ¯³ª", "±×·¸°Ô ºÎ¸£Áö ¸»¶ó°í!  Â¥Áõ ³ª ³ª ±×³É ¿Àºü Áö°©¿¡¼­ »©°£´Ù. ",1));
+        yield return StartCoroutine(NormalChat("ë‚˜ìœ ë‚˜", "ê·¸ë ‡ê²Œ ë¶€ë¥´ì§€ ë§ë¼ê³ ! ì§œì¦ ë‚˜ ë‚˜ ê·¸ëƒ¥ ì˜¤ë¹  ì§€ê°‘ì—ì„œ ë¹¼ê°„ë‹¤. ",1));
+        GameManager.Instance.image2.color = new Color(255, 255, 255,1f);
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[1];
         ColorSet(4);
         ColorSet(3);
         GameManager.Instance.image2.color = new Color(255, 255, 255,1f);
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[0];
         GameManager.Instance.image1.sprite = GameManager.Instance.naTehyeon[5];
-        yield return StartCoroutine(NormalChat("³ªÅÂÇö", "¾Æ ¾È‰Â´Ù°í;;",1));
-        yield return StartCoroutine(NormalChat("³ªÅÂÇö", "...",1));
+        yield return StartCoroutine(NormalChat("ë‚˜íƒœí˜„", "ì•„ ì•ˆ ëœë‹¤ê³ ;;",1));
+        yield return StartCoroutine(NormalChat("ë‚˜íƒœí˜„", "...",1));
       
        
         
-        yield return StartCoroutine(NormalChat("³ªÅÂÇö", "¾Æ ÇĞ±³ °¡±â ±ÍÂú´Ù;",1));
+        yield return StartCoroutine(NormalChat("ë‚˜íƒœí˜„", "ì•„ í•™êµ ê°€ê¸° ê·€ì°®ë‹¤;",1));
         ChatText.color = Color.blue;
         
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[5];
-        yield return StartCoroutine(NormalChat("", "³ª´Â Ä§´ë¿¡¼­ ÀÏ¾î³ª ºÎ¾ıÀ¸·Î ÇâÇß´Ù",0));
+        yield return StartCoroutine(NormalChat("", "ë‚˜ëŠ” ì¹¨ëŒ€ì—ì„œ ì¼ì–´ë‚˜ ë¶€ì—Œìœ¼ë¡œ í–¥í–ˆë‹¤",0));
         ChatText.color = Color.black;
 
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[0];
-        yield return StartCoroutine(NormalChat("¾ö¸¶", "¿ä»õ ÇĞ±³ »ıÈ°Àº ¾î¶°´Ï?",1));
+        yield return StartCoroutine(NormalChat("ì—„ë§ˆ", "ìš”ìƒˆ í•™êµìƒí™œì€ ì–´ë– ë‹ˆ?",1));
 
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[0];
-        yield return StartCoroutine(NormalChat("³ªÅÂÇö", "¿­½ÉÈ÷´Â ÇÏ°í ÀÖ¾î¿ä",1));
+        yield return StartCoroutine(NormalChat("ë‚˜íƒœí˜„", "ì—´ì‹¬íˆ ìƒí™œí•˜ê³ ëŠ” ìˆì–´ìš”.",1));
 
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[0];
-        yield return StartCoroutine(NormalChat("¾ö¸¶", "¾ö¸¶´Â °øºÎ ¸ø ÇØµµ µÇ ³Ê¸¸ Çàº¹ÇÏ¸é µÇ ±Ùµ¥ ²ÃÁö´Â ¾È ÇÏ¸é ÁÁ°Ú¾î",1));
+        yield return StartCoroutine(NormalChat("ì—„ë§ˆ", "ì—„ë§ˆëŠ” ê³µë¶€ ëª» í•´ë„ ë¼ ë„ˆë§Œ í–‰ë³µí•˜ë©´ ë¼ ê·¼ë° ê¼´ì°ŒëŠ” ì•ˆ í•˜ë©´ ì¢‹ê² ì–´.",1));
 
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[1];
-        yield return StartCoroutine(NormalChat("¾ö¸¶", "¾Æ ¸Â´Ù ¿·Áı °­¹ÎÀÌ´Â ÀÌ¹ø¿¡ \r\n¸ğÀÇ°í»ç Àü °ú¸ñ 1~2µî±Ş ¸Â¾Ò´Ù°í ÇÏ´õ¶ó  ",1));
+        yield return StartCoroutine(NormalChat("ì—„ë§ˆ", "ì•„ ë§ë‹¤ ì˜†ì§‘ ê°•ë¯¼ì´ëŠ” ì´ë²ˆì— \r\nëª¨ì˜ê³ ì‚¬ ì „ ê³¼ëª© 1~2ë“±ê¸‰ ë§ì•˜ë‹¤ê³  í•˜ë”ë¼  ",1));
 
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[2];
-        yield return StartCoroutine(NormalChat("³ªÅÂÇö", "¾Ë°Ú´Ù°í¿ä",1));
+        yield return StartCoroutine(NormalChat("ë‚˜íƒœí˜„", "ì•Œê² ë‹¤ê³ ìš”",1));
 
         ChatText.color = Color.blue;
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[3];
-        yield return StartCoroutine(NormalChat("", "³ª´Â ½ÄÅ¹¿¡ ¾É¾Æ ¹äÀ» ¸Ô¾ú´Ù",0));
+        yield return StartCoroutine(NormalChat("", "ë‚˜ëŠ” ì‹íƒì— ì•‰ì•„ ë°¥ì„ ë¨¹ì—ˆë‹¤.",0));
         ChatText.color = Color.black;
 
 
         /*
         GameManager.Instance.backGroundImage.sprite = GameManager.Instance.backGround[5];
         GameManager.Instance.image.sprite = GameManager.Instance.naTehyeon[2];
-        yield return StartCoroutine(NormalChat("³ªÅÂÇö", "¾ö¸¶ ¾î¶»°Ô 5ÀÏ ¿¬¼Ó »ç°ñ ±¹¹°¸¸ ³ª¿À´Â °Å¿¹¿ä!"));
+        yield return StartCoroutine(NormalChat("ë‚˜íƒœí˜„", "ì—„ë§ˆ ì–´ë–»ê²Œ 5ì¼ ì—°ì† ì‚¬ê³¨ êµ­ë¬¼ë§Œ ë‚˜ì˜¤ëŠ” ê±°ì˜ˆìš”!"));
 
         GameManager.Instance.backGroundImage.sprite = GameManager.Instance.backGround[5];
         GameManager.Instance.image.sprite = GameManager.Instance.naTehyeon[2];
-        yield return StartCoroutine(NormalChat("¾ö¸¶", "Æí½ÄÇÏÁö ¸»°í ´Ù ¸Ô¾î ¾ÆÁ÷ 1ÁÖÀÏ Ä¡ ´õ ³²¾ÆÀÖ¾î. ±×¸®°í ´Ù ¸Ô°í ºñÅ¸¹Î ²À Ã¬°Ü ¸Ô¾î¶ó~"));
+        yield return StartCoroutine(NormalChat("ì—„ë§ˆ", "í¸ì‹í•˜ì§€ ë§ê³  ë‹¤ ë¨¹ì–´ ì•„ì§ 1ì£¼ì¼ ì¹˜ ë” ë‚¨ì•„ìˆì–´. ê·¸ë¦¬ê³  ë‹¤ ë¨¹ê³  ë¹„íƒ€ë¯¼ ê¼­ ì±™ê²¨ ë¨¹ì–´ë¼~"));
 
         GameManager.Instance.backGroundImage.sprite = GameManager.Instance.backGround[5];
         GameManager.Instance.image.sprite = GameManager.Instance.naTehyeon[2];
-        yield return StartCoroutine(NormalChat("", "³ª´Â ½ÄÅ¹¿¡ ¾É¾Æ ¹äÀ» ¸Ô¾ú´Ù"));
+        yield return StartCoroutine(NormalChat("", "ë‚˜ëŠ” ì‹íƒì— ì•‰ì•„ ë°¥ì„ ë¨¹ì—ˆë‹¤"));
 
         */
 
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[3];
-        yield return StartCoroutine(NormalChat("¾ö¸¶", "ÇĞ±³ Àß °¬´Ù¿À·Å",1));
+        yield return StartCoroutine(NormalChat("ì—„ë§ˆ", "í•™êµ ì˜ ê°”ë‹¤ ì˜¤ë ´",1));
 
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[3];
-        yield return StartCoroutine(NormalChat("³ªÅÂÇö", "´Ù³à¿À°Ú½À´Ï´Ù",1));
+        yield return StartCoroutine(NormalChat("ë‚˜íƒœí˜„", "ë‹¤ë…€ì˜¤ê² ìŠµë‹ˆë‹¤.",1));
 
         GameManager.Instance.image1.sprite = GameManager.Instance.naYuNa[1];
-        yield return StartCoroutine(NormalChat("³ªÀ¯³ª", "¾Æ! °°ÀÌ °¡ ³ª ´ë·Á ´Ù ÁÖ°í °¡¶ó°í!!",1));
+        yield return StartCoroutine(NormalChat("ë‚˜ìœ ë‚˜", "ì•„! ê°™ì´ ê°€ ë‚˜ ëŒ€ë ¤ ë‹¤ ì£¼ê³  ê°€ë¼ê³ !!",1));
 
   
         GameManager.Instance.image1.sprite = GameManager.Instance.naTehyeon[5];
         ChatText.color = Color.blue;
         GameManager.Instance.backGroundImage.color = Color.black;
-        yield return StartCoroutine(NormalChat("³ªÅÂÇö", "ÀÌ°ÍÀÌ ³»°¡ Åõ¸í ÀÎ°£ÀÌ µÇ±â ÀüÀÇ Èñ¹ÌÇÑ ±â¾ï Áß ÇÏ³ªÀÌ´Ù",0));
+        yield return StartCoroutine(NormalChat("ë‚˜íƒœí˜„", "ì´ê²ƒì´ ë‚´ê°€ íˆ¬ëª… ì¸ê°„ì´ ë˜ê¸° ì „ì˜ í¬ë¯¸í•œ ê¸°ì–µ ì¤‘ í•˜ë‚˜ì´ë‹¤.",0));
         ColorSet(5);
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[3];
-        yield return StartCoroutine(NormalChat("³ªÅÂÇö", "±×·¸´Ù. ³ª´Â ¿À´Ã Åõ¸í ÀÎ°£ÀÌ µÇ¾î¹ö¸° °ÍÀÌ´Ù!",0));
+        yield return StartCoroutine(NormalChat("ë‚˜íƒœí˜„", "ê·¸ë ‡ë‹¤. ë‚˜ëŠ” ì˜¤ëŠ˜ íˆ¬ëª… ì¸ê°„ì´ ë˜ì–´ë²„ë¦° ê²ƒì´ë‹¤!",0));
         ChatText.color = Color.black;
         
        
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[3];
-        yield return StartCoroutine(NormalChat("³ªÅÂÇö", "¾Æ ±Ùµ¥ ¼ºÀûÀº ¾î¶»°Ô ÇÏÁö?",1));
+        yield return StartCoroutine(NormalChat("ë‚˜íƒœí˜„", "ì•„ ê·¼ë° ì„±ì ì€ ì–´ë–»ê²Œ í•˜ì§€?",1));
 
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[2];
-        yield return StartCoroutine(NormalChat("³ªÅÂÇö", "±×·³ ³» ¼öµµ±Ç ´ëÇĞÀº?!",1));
+        yield return StartCoroutine(NormalChat("ë‚˜íƒœí˜„", "ê·¸ëŸ¼ ë‚´ ìˆ˜ë„ê¶Œ ëŒ€í•™ì€?!",1));
 
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[4];
-        yield return StartCoroutine(NormalChat("³ªÅÂÇö", "¾Æ ¸Â´Ù ³ª ¾îÂ÷ÇÇ ÇĞ±³ ¼ö¾÷ ¾È µèÁö! ÀÌ·¸°Ô µÈ °Å ±×³É ³î·¯ °¡¾ßÁö~",1));
+        yield return StartCoroutine(NormalChat("ë‚˜íƒœí˜„", "ì•„ ë§ë‹¤ ë‚˜ ì–´ì°¨í”¼ í•™êµ ìˆ˜ì—… ì•ˆ ë“£ì§€! ì´ë ‡ê²Œ ëœ ê±° ê·¸ëƒ¥ ë†€ëŸ¬ ê°€ì•¼ì§€~",1));
 
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[0];
         ChatText.color = Color.blue;
-        yield return StartCoroutine(NormalChat("", "ÇØº¸°í ½ÍÀº °ÍµéÀÌ ¶°¿Ã¶ó °ğÀå ½Ã³»·Î ÇâÇß´Ù",0));
+        yield return StartCoroutine(NormalChat("", "í•´ë³´ê³  ì‹¶ì€ ê²ƒë“¤ì´ ë– ì˜¬ë¼ ê³§ì¥ ì‹œë‚´ë¡œ í–¥í–ˆë‹¤",0));
         ColorSet(6);
         
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[0];
         GameManager.Instance.backGroundImage.sprite = GameManager.Instance.backGround[0];
         GameManager.Instance.backGroundImage.color = Color.white;
-        yield return StartCoroutine(NormalChat("", "½Ã³»·Î µµÂøÇÑ ³ªÅÂÇö ¾îµğ·Î °¥±î?",0));
+        yield return StartCoroutine(NormalChat("", "ì‹œë‚´ë¡œ ë„ì°©í•œ ë‚˜íƒœí˜„ ì–´ë””ë¡œ ê°ˆê¹Œ?",0));
         yield return StartCoroutine(ChoiceText());
+        
         GameManager.Instance.backGroundImage.sprite = GameManager.Instance.backGround[0];
         ChatText.color = Color.blue;
-        yield return StartCoroutine(NormalChat("", "¾ç½É¿¡ Âñ¸®´Â ÀÏµµ ÇßÁö¸¸ ±×·¡µµ ³Ê¹« Àç¹ÌÀÖ¾ú´Ù",0));
+        yield return StartCoroutine(NormalChat("", "ì–‘ì‹¬ì— ì°”ë¦¬ëŠ” ì¼ë„ í–ˆì§€ë§Œ ê·¸ë˜ë„ ë„ˆë¬´ ì¬ë¯¸ìˆì—ˆë‹¤",0));
         ChatText.color = Color.black;
         
 
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[4];
         GameManager.Instance.backGroundImage.sprite = GameManager.Instance.backGround[5];
         ChatText.color = Color.black;
-        yield return StartCoroutine(NormalChat("³ªÅÂÇö", "´Ù³à¿Ô½À´Ï´Ù",1));
+        yield return StartCoroutine(NormalChat("ë‚˜íƒœí˜„", "ë‹¤ë…€ì™”ìŠµë‹ˆë‹¤",1));
 
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[4];
         yield return StartCoroutine(NormalChat("", ".......",0));
@@ -215,273 +231,273 @@ public class ChatManager : MonoBehaviour
         yield return StartCoroutine(NormalChat("", ".......",0));
 
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[1];
-        yield return StartCoroutine(NormalChat("³ªÅÂÇö", "¾ö¸¶? µÅÁö¾ß?",1));
+        yield return StartCoroutine(NormalChat("ë‚˜íƒœí˜„", "ì—„ë§ˆ? ë¼ì§€ì•¼?",1));
 
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[0];
         ChatText.color = Color.blue;
-        yield return StartCoroutine(NormalChat("", "¾Æ¹«¸® ºÒ·¯µµ ¾Æ¹«·± ´ë´äÀÌ µ¹¾Æ¿ÀÁö ¾Ê¾Ò´Ù",0));
+        yield return StartCoroutine(NormalChat("", "ì•„ë¬´ë¦¬ ë¶ˆëŸ¬ë„ ì•„ë¬´ëŸ° ëŒ€ë‹µì´ ëŒì•„ì˜¤ì§€ ì•Šì•˜ë‹¤",0));
 
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[0];
-        yield return StartCoroutine(NormalChat("", "³ª´Â °ğÀå ºÎ¾ıÀ¸·Î ´Ş·Á°¬´Ù.",0));
+        yield return StartCoroutine(NormalChat("", "ë‚˜ëŠ” ê³§ì¥ ë¶€ì—Œìœ¼ë¡œ ë‹¬ë ¤ê°”ë‹¤.",0));
         ChatText.color = Color.black;
 
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[1];
-        yield return StartCoroutine(NormalChat("³ªÅÂÇö", "¾ö¸¶~, ¿Ö ´ë´äÀÌ ¾ø¾î~",1));
+        yield return StartCoroutine(NormalChat("ë‚˜íƒœí˜„", "ì—„ë§ˆ~, ì™œ ëŒ€ë‹µì´ ì—†ì–´~",1));
 
         GameManager.Instance.image1.sprite = GameManager.Instance.naYuNa[1];
-        yield return StartCoroutine(NormalChat("³ªÀ¯³ª", "¿Àºü! ¾ö¸¶°¡ ¹ä ¸ÔÀ¸·¡!",1));
+        yield return StartCoroutine(NormalChat("ë‚˜ìœ ë‚˜", "ì˜¤ë¹ ! ì—„ë§ˆê°€ ë°¥ ë¨¹ìœ¼ë˜!",1));
 
         GameManager.Instance.image1.sprite = GameManager.Instance.naYuNa[2];
-        yield return StartCoroutine(NormalChat("³ªÀ¯³ª", "³ª ¿ëµ·...Áà¾ßÁö.. ±×´Ï±î »¡¸® ³ª¿Í",1));
+        yield return StartCoroutine(NormalChat("ë‚˜ìœ ë‚˜", "ë‚˜ ìš©ëˆ...ì¤˜ì•¼ì§€.. ê·¸ë‹ˆê¹Œ ë¹¨ë¦¬ ë‚˜ì™€",1));
 
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[3];
-        yield return StartCoroutine(NormalChat("³ªÅÂÇö", "³ª, ¿©±â¿¡ ÀÖ´Âµ¥?",1));
+        yield return StartCoroutine(NormalChat("ë‚˜íƒœí˜„", "ë‚˜, ì—¬ê¸°ì— ìˆëŠ”ë°?",1));
 
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[3];
-        yield return StartCoroutine(NormalChat("³ªÅÂÇö", "¹¹¾ß! ¸ô·¡Ä«¸Ş¶ó¿´¾î?",1));
+        yield return StartCoroutine(NormalChat("ë‚˜íƒœí˜„", "ë­ì•¼! ëª°ë˜ì¹´ë©”ë¼ì˜€ì–´?",1));
 
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[4];
-        yield return StartCoroutine(NormalChat("³ªÅÂÇö", "»¡¸® ¹äÀÌ³ª ¸ÔÀÚ",1));
+        yield return StartCoroutine(NormalChat("ë‚˜íƒœí˜„", "ë¹¨ë¦¬ ë°¥ì´ë‚˜ ë¨¹ì",1));
 
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[5];
         ChatText.color = Color.blue;
-        yield return StartCoroutine(NormalChat("", "µ¿»ıÀº ³ª¸¦ ¹«½ÃÇÏ¸ç ºÎ¾ıÀ¸·Î °¬´Ù",0));
+        yield return StartCoroutine(NormalChat("", "ë™ìƒì€ ë‚˜ë¥¼ ë¬´ì‹œí•˜ë©° ë¶€ì—Œìœ¼ë¡œ ê°”ë‹¤",0));
 
         GameManager.Instance.image1.sprite = GameManager.Instance.naYuNa[2];
         ChatText.color = Color.black;
-        yield return StartCoroutine(NormalChat("¾ö¸¶", "¸ÔÀÚ...",1));
+        yield return StartCoroutine(NormalChat("ì—„ë§ˆ", "ë¨¹ì...",1));
 
         GameManager.Instance.image1.sprite = GameManager.Instance.naYuNa[2];
-        yield return StartCoroutine(NormalChat("³ªÀ¯³ª", "¿Àºü´Â..?",1));
+        yield return StartCoroutine(NormalChat("ë‚˜ìœ ë‚˜", "ì˜¤ë¹ ëŠ”..?",1));
 
-        yield return StartCoroutine(NormalChat("¾ö¸¶", "¾ÆÁ÷... ¿¬¶ôÀÌ ¾ø³×...",1));
-
-        GameManager.Instance.image1.sprite = GameManager.Instance.naYuNa[2];
-        yield return StartCoroutine(NormalChat("³ªÀ¯³ª", "¿Ö ÇÏÇÊ °¥ºñÂòÀÌ¾ß?",1));
-
-        yield return StartCoroutine(NormalChat("¾ö¸¶", "¿Àºü ¾ğÁ¦ ¿ÃÁö ¸ğ¸£Àİ¾Æ ±×·¡¼­ ÁÁ¾ÆÇÏ´Â °É·Î Çß¾î",1));
-
-        yield return StartCoroutine(NormalChat("¾ö¸¶", "³Ê ¿À´Ã Çö°ü¹® È¥ÀÚ ³ª°¡°í È¥ÀÚ ¿À´Â ¸ğ½À ³Ê¹« ³¸¼³´õ¶ó ÀûÀÀÀÌ ¾ÆÁ÷µµ ¾È µÇ³×",1));
+        yield return StartCoroutine(NormalChat("ì—„ë§ˆ", "ì•„ì§... ì—°ë½ì´ ì—†ë„¤...",1));
 
         GameManager.Instance.image1.sprite = GameManager.Instance.naYuNa[2];
-        yield return StartCoroutine(NormalChat("³ªÀ¯³ª", "±×·± ¸» ÇÏÁö ¸¶ °ğ ¿Ã °Å¾ß",1));
+        yield return StartCoroutine(NormalChat("ë‚˜ìœ ë‚˜", "ì™œ í•˜í•„ ê°ˆë¹„ì°œì´ì•¼?",1));
 
-        yield return StartCoroutine(NormalChat("¾ö¸¶", "±×·¸Áö... °ğ ¿Ã²¨¾ß ÁøÂ¥ °øºÎ ¸øÇØµµ µÇ°í ÁÁÀº ´ëÇĞ ¾È °¡µµ ÁÁÀ¸´Ï±ñ.. ¿Ã ²¨¾ß",1));
+        yield return StartCoroutine(NormalChat("ì—„ë§ˆ", "ì˜¤ë¹  ì–¸ì œ ì˜¬ì§€ ëª¨ë¥´ì–ì•„ ê·¸ë˜ì„œ ì¢‹ì•„í•˜ëŠ” ê±¸ë¡œ í–ˆì–´",1));
+
+        yield return StartCoroutine(NormalChat("ì—„ë§ˆ", "ë„ˆ ì˜¤ëŠ˜ í˜„ê´€ë¬¸ í˜¼ì ë‚˜ê°€ê³  í˜¼ì ì˜¤ëŠ” ëª¨ìŠµ ë„ˆë¬´ ë‚¯ì„¤ë”ë¼ ì ì‘ì´ ì•„ì§ë„ ì•ˆ ë˜ë„¤",1));
+
+        GameManager.Instance.image1.sprite = GameManager.Instance.naYuNa[2];
+        yield return StartCoroutine(NormalChat("ë‚˜ìœ ë‚˜", "ê·¸ëŸ° ë§ í•˜ì§€ ë§ˆ ê³§ ì˜¬ ê±°ì•¼",1));
+
+        yield return StartCoroutine(NormalChat("ì—„ë§ˆ", "ê·¸ë ‡ì§€... ê³§ ì˜¬êº¼ì•¼ ì§„ì§œ ê³µë¶€ ëª»í•´ë„ ë˜ê³  ì¢‹ì€ ëŒ€í•™ ì•ˆ ê°€ë„ ì¢‹ìœ¼ë‹ˆê¹.. ì˜¬ êº¼ì•¼",1));
         
         GameManager.Instance.image1.sprite = GameManager.Instance.naTehyeon[5];
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[1];
-        yield return StartCoroutine(NormalChat("³ªÅÂÇö", "¾î? ÀÌ°Ô...¿Ö?",1));
+        yield return StartCoroutine(NormalChat("ë‚˜íƒœí˜„", "ì–´? ì´ê²Œ...ì™œ?",1));
 
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[0];
         ChatText.color = Color.blue;
-        yield return StartCoroutine(NormalChat("", "³ª´Â °ğÀå Áı ¹ÛÀ¸·Î ¶ÙÃÄ³ª°¬´Ù",0));
+        yield return StartCoroutine(NormalChat("", "ë‚˜ëŠ” ê³§ì¥ ì§‘ ë°–ìœ¼ë¡œ ë›°ì³ë‚˜ê°”ë‹¤",0));
         
         GameManager.Instance.backGroundImage.color = Color.black;
         ColorSet(5);
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[0];
-        yield return StartCoroutine(NormalChat("", "¾ó¸¶³ª ¶Ù¾úÀ»±î",0));
+        yield return StartCoroutine(NormalChat("", "ì–¼ë§ˆë‚˜ ë›°ì—ˆì„ê¹Œ",0));
 
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[0];
-        yield return StartCoroutine(NormalChat("", "³ª´Â ¶Ù¾î°¡´Â µµÁß Àá½Ã µÚ¸¦ µ¹¾ÒÁö¸¸, ¿©µ¿»ı°ú ¾ö¸¶´Â ³ª¸¦ µû¶ó¿ÀÁö ¾Ê¾Ò´Ù",0));
+        yield return StartCoroutine(NormalChat("", "ë‚˜ëŠ” ë›°ì–´ê°€ëŠ” ë„ì¤‘ ì ì‹œ ë’¤ë¥¼ ëŒì•˜ì§€ë§Œ, ì—¬ë™ìƒê³¼ ì—„ë§ˆëŠ” ë‚˜ë¥¼ ë”°ë¼ì˜¤ì§€ ì•Šì•˜ë‹¤",0));
 
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[0];
-        yield return StartCoroutine(NormalChat("", "³Ê¹« ÁöÄ£ ³ª¸ÓÁö ¹Ù´Ú¿¡ ¾É¾Æ ÁÖÀ§¸¦ µÑ·¯ºÃ´Ù",0));
+        yield return StartCoroutine(NormalChat("", "ë„ˆë¬´ ì§€ì¹œ ë‚˜ë¨¸ì§€ ë°”ë‹¥ì— ì•‰ì•„ ì£¼ìœ„ë¥¼ ë‘˜ëŸ¬ë´¤ë‹¤",0));
        
         ColorSet(6);
         GameManager.Instance.backGroundImage.color = Color.white;
         GameManager.Instance.backGroundImage.sprite = GameManager.Instance.backGround[1];
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[0];
-        yield return StartCoroutine(NormalChat("", "¹ãÀÌ ±í¾îÁö°í ¿©·¯ °£ÆÇÀÇ ºÒºûÀÌ ÁñºñÇß´Ù",0));
+        yield return StartCoroutine(NormalChat("", "ë°¤ì´ ê¹Šì–´ì§€ê³  ì—¬ëŸ¬ ê°„íŒì˜ ë¶ˆë¹›ì´ ì¦ë¹„í–ˆë‹¤",0));
 
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[0];
-        yield return StartCoroutine(NormalChat("", "¿©·¯ Ä¿ÇÃµé°ú ¾ÆÁ÷ ÁıÀ¸·Î µ¹¾Æ°¡Áö ¾ÊÀº ÇĞ»ı, Åğ±ÙÇÏ°í ÀÖ´Â Á÷ÀåÀÎµéÀÌ Áö³ª°¡°í ÀÖ¾ú´Ù",0));
+        yield return StartCoroutine(NormalChat("", "ì—¬ëŸ¬ ì»¤í”Œë“¤ê³¼ ì•„ì§ ì§‘ìœ¼ë¡œ ëŒì•„ê°€ì§€ ì•Šì€ í•™ìƒ, í‡´ê·¼í•˜ê³  ìˆëŠ” ì§ì¥ì¸ë“¤ì´ ì§€ë‚˜ê°€ê³  ìˆì—ˆë‹¤",0));
 
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[0];
-        yield return StartCoroutine(NormalChat("", "ÇÏÁö¸¸ ±× ´©±¸µµ ´õ·¯¿î ¹Ù´Ú¿¡ ¾É¾ÆÀÖ´Â ³»°Ô ´«±æÁ¶Â÷ ÁÖÁö ¾Ê¾Ò´Ù",0));
+        yield return StartCoroutine(NormalChat("", "í•˜ì§€ë§Œ ê·¸ ëˆ„êµ¬ë„ ë”ëŸ¬ìš´ ë°”ë‹¥ì— ì•‰ì•„ìˆëŠ” ë‚´ê²Œ ëˆˆê¸¸ì¡°ì°¨ ì£¼ì§€ ì•Šì•˜ë‹¤",0));
         ChatText.color = Color.black;
 
         GameManager.Instance.image1.sprite = GameManager.Instance.aYun[0];
-        yield return StartCoroutine(NormalChat("¾ÆÀ±", "±¦ÂúÀ¸¼¼¿ä?",1));
+        yield return StartCoroutine(NormalChat("ì•„ìœ¤", "ê´œì°®ìœ¼ì„¸ìš”?",1));
 
         ChatText.color = Color.blue;
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[0];
-        yield return StartCoroutine(NormalChat("", "¾Æ¸§´äÁö¸¸ ºñ±ØÀûÀÎ ´«À» °¡Áø ±×³à¿ÍÀÇ Ã¹ ¸¸³²ÀÌ¾ú´Ù.",0));
+        yield return StartCoroutine(NormalChat("", "ì•„ë¦„ë‹µì§€ë§Œ ë¹„ê·¹ì ì¸ ëˆˆì„ ê°€ì§„ ê·¸ë…€ì™€ì˜ ì²« ë§Œë‚¨ì´ì—ˆë‹¤.",0));
         ChatText.color = Color.black;
         
         ColorSet(1);
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[6];
-        yield return StartCoroutine(NormalChat("³ªÅÂÇö", "³»°¡ º¸¿©?",1));
+        yield return StartCoroutine(NormalChat("ë‚˜íƒœí˜„", "ë‚´ê°€ ë³´ì—¬?",1));
         ColorSet(2);
         GameManager.Instance.image1.sprite = GameManager.Instance.aYun[1];
-        yield return StartCoroutine(NormalChat("¾ÆÀ±", "³×..³×...?",1));
+        yield return StartCoroutine(NormalChat("ì•„ìœ¤", "ë„¤..ë„¤...?",1));
         ColorSet(1);
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[3];
-        yield return StartCoroutine(NormalChat("³ªÅÂÇö", "¾Æ ¼Ò¸®ÃÄ¼­ ¹Ì¾È...ÇØ¿ä..!",1));
+        yield return StartCoroutine(NormalChat("ë‚˜íƒœí˜„", "ì•„ ì†Œë¦¬ì³ì„œ ë¯¸ì•ˆ...í•´ìš”..!",1));
         ColorSet(2);
         GameManager.Instance.image1.sprite = GameManager.Instance.aYun[1];
-        yield return StartCoroutine(NormalChat("¾ÆÀ±", "´ç¿¬È÷ º¸ÀÌÁö ¾ÊÀ» ±î¿ä...?",1));
+        yield return StartCoroutine(NormalChat("ì•„ìœ¤", "ë‹¹ì—°íˆ ë³´ì´ì§€ ì•Šì„ ê¹Œìš”...?",1));
         ColorSet(1);
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[1];
-        yield return StartCoroutine(NormalChat("³ªÅÂÇö", "ÁøÂ¥ ¹Ì¾ÈÇÑµ¥ È¤½Ã ´Ù¸¥ »ç¶÷µéÇÑÅ× ³»°¡ º¸ÀÌ´ÂÁö ¹°¾îºÁ ÁÙ·¡¿ä?",1));
+        yield return StartCoroutine(NormalChat("ë‚˜íƒœí˜„", "ì§„ì§œ ë¯¸ì•ˆí•œë° í˜¹ì‹œ ë‹¤ë¥¸ ì‚¬ëŒë“¤í•œí…Œ ë‚´ê°€ ë³´ì´ëŠ”ì§€ ë¬¼ì–´ë´ ì¤„ë˜ìš”?",1));
         ColorSet(3);
         ChatText.color = Color.blue;
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[1];
-        yield return StartCoroutine(NormalChat("", "¿©ÀÚ ¾ÆÀÌ´Â ´çÈ²½º·¯¿öÇßÁö¸¸ ±×·³¿¡µµ ¹°¾îºÁ ÁÖ¾ú´Ù",0));
+        yield return StartCoroutine(NormalChat("", "ì—¬ì ì•„ì´ëŠ” ë‹¹í™©ìŠ¤ëŸ¬ì›Œí–ˆì§€ë§Œ ê·¸ëŸ¼ì—ë„ ë¬¼ì–´ë´ ì£¼ì—ˆë‹¤",0));
         ChatText.color = Color.black;
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[5];
         GameManager.Instance.image1.sprite = GameManager.Instance.aYun[1];
-        yield return StartCoroutine(NormalChat("¾ÆÀ±", "È¤½Ã Àú±â ÀúºĞÀÌ º¸ÀÌ½Ã³ª¿ä?",1));
+        yield return StartCoroutine(NormalChat("ì•„ìœ¤", "í˜¹ì‹œ ì €ê¸° ì €ë¶„ì´ ë³´ì´ì‹œë‚˜ìš”?",1));
         
-        yield return StartCoroutine(NormalChat("ÇàÀÎ1", "¾Æ´¢, ¾Æ¹«°Íµµ ¾ø´Âµ¥¿ä?",1));
+        yield return StartCoroutine(NormalChat("í–‰ì¸1", "ì•„ë‡¨, ì•„ë¬´ê²ƒë„ ì—†ëŠ”ë°ìš”?",1));
         
         GameManager.Instance.image1.sprite = GameManager.Instance.aYun[1];
-        yield return StartCoroutine(NormalChat("¾ÆÀ±", "³×?! ¤·,¾Èº¸ÀÎ´Ù°í¿ä? ¿Ö¿ä?",1));
+        yield return StartCoroutine(NormalChat("ì•„ìœ¤", "ë„¤?! ã…‡,ì•ˆë³´ì¸ë‹¤ê³ ìš”? ì™œìš”?",1));
         
         ChatText.color = Color.blue;
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[0];
-        yield return StartCoroutine(NormalChat("", "¿©ÀÚ¾ÆÀÌ´Â °í°³¸¦ ¼÷ÀÌ°í ³»°Ô µ¹¾Æ¿Ô´Ù.",0));
+        yield return StartCoroutine(NormalChat("", "ì—¬ìì•„ì´ëŠ” ê³ ê°œë¥¼ ìˆ™ì´ê³  ë‚´ê²Œ ëŒì•„ì™”ë‹¤.",0));
         ChatText.color = Color.black;
         
         ColorSet(1);
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[3];
-        yield return StartCoroutine(NormalChat("³ªÅÂÇö", "º¸ÀÎµ¥¿ä?",1));
+        yield return StartCoroutine(NormalChat("ë‚˜íƒœí˜„", "ë³´ì¸ë°ìš”?",1));
         
         ColorSet(2);
         GameManager.Instance.image1.sprite = GameManager.Instance.aYun[3];
-        yield return StartCoroutine(NormalChat("¾ÆÀ±", "¾Æ´¢.. ¾Æ´Ï À¿,,, ±×·¯´Ï±ñ Àúµµ ¾È º¸¿©¿ä ,¡¦ ¾Èº¸,, ¤· ",1));
+        yield return StartCoroutine(NormalChat("ì•„ìœ¤", "ì•„ë‡¨.. ì•„ë‹ˆ ì,,, ê·¸ëŸ¬ë‹ˆê¹ ì €ë„ ì•ˆ ë³´ì—¬ìš” ,â€¦ ì•ˆë³´,, ã…‡ ",1));
         
-        yield return StartCoroutine(NormalChat("¾ÆÀ±", ".....",1));
+        yield return StartCoroutine(NormalChat("ì•„ìœ¤", ".....",1));
         
         ChatText.color = Color.blue;
-        yield return StartCoroutine(NormalChat("¾ÆÀ±", "¹«¼·±ä ÇÑµ¥....... ¹º°¡ ºÒ½ÖÇÏ±âµµ ÇÏ°í \r\n ³ª¿¡°Ô ÇØ¸¦ °¡ÇÒ °Ç °°Áö ¾ÊÀ¸´Ï±ñ ÀÏ´Ü µµ¿ÍÁÖÀÚ ",1));
+        yield return StartCoroutine(NormalChat("ì•„ìœ¤", "ë¬´ì„­ê¸´ í•œë°....... ë­”ê°€ ë¶ˆìŒí•˜ê¸°ë„ í•˜ê³  \r\n ë‚˜ì—ê²Œ í•´ë¥¼ ê°€í•  ê±´ ê°™ì§€ ì•Šìœ¼ë‹ˆê¹ ì¼ë‹¨ ë„ì™€ì£¼ì ",1));
         ChatText.color = Color.black;
             
-        yield return StartCoroutine(NormalChat("¾ÆÀ±", ".....",1));
+        yield return StartCoroutine(NormalChat("ì•„ìœ¤", ".....",1));
         
-        yield return StartCoroutine(NormalChat("¾ÆÀ±", "»ç½Ç¡¦ º¸¿©¿ä¡¦.. ±×°Íµµ Àß ",1));
+        yield return StartCoroutine(NormalChat("ì•„ìœ¤", "ì‚¬ì‹¤â€¦ ë³´ì—¬ìš”â€¦.. ê·¸ê²ƒë„ ì˜ ",1));
         
         GameManager.Instance.image1.sprite = GameManager.Instance.aYun[1];
-        yield return StartCoroutine(NormalChat("¾ÆÀ±", "±×¡¦ ¹ÛÀÌ¶ó Ãä±âµµ ÇÏ°í ¾îµğ¿¡ µé¾î°¡¼­ ¾ê±âÇÏ½Ç·¡¿ä?",1));
+        yield return StartCoroutine(NormalChat("ì•„ìœ¤", "ê·¸â€¦ ë°–ì´ë¼ ì¶¥ê¸°ë„ í•˜ê³  ì–´ë””ì— ë“¤ì–´ê°€ì„œ ì–˜ê¸°í•˜ì‹¤ë˜ìš”?",1));
 
         ColorSet(4);
         GameManager.Instance.backGroundImage.sprite = GameManager.Instance.backGround[7];
         GameManager.Instance.image1.sprite = GameManager.Instance.naTehyeon[5];
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[5];
         ChatText.color = Color.blue;
-        yield return StartCoroutine(NormalChat("", "¿©ÀÚ¾ÆÀÌ¸¦ µû¶ó µµÂøÇÑ °÷Àº ¾ÆÀÌÀÇ ÁıÀÌ¾ú´Ù.",0));
+        yield return StartCoroutine(NormalChat("", "ì—¬ìì•„ì´ë¥¼ ë”°ë¼ ë„ì°©í•œ ê³³ì€ ì•„ì´ì˜ ì§‘ì´ì—ˆë‹¤.",0));
         ChatText.color = Color.black;
         
         GameManager.Instance.image1.sprite = GameManager.Instance.aYun[1];
-        yield return StartCoroutine(NormalChat("¾ÆÀ±", "Á¦°¡ ÇĞ»ıÀÌ¶ó¼­ Áö±İ °¥ ¼ö ÀÖ´Â °÷ÀÌ Áı¹Û¿¡ ¾ø¾î¿ä.?",1));
+        yield return StartCoroutine(NormalChat("ì•„ìœ¤", "ì œê°€ í•™ìƒì´ë¼ì„œ ì§€ê¸ˆ ê°ˆ ìˆ˜ ìˆëŠ” ê³³ì´ ì§‘ë°–ì— ì—†ì–´ìš”.?",1));
         
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[5];
         GameManager.Instance.image1.sprite = GameManager.Instance.aYun[4];
-        yield return StartCoroutine(NormalChat("¾ÆÀ±", "Àı´ë·Î ´Ù¸¥ ¹æ °¡Áö ¸»°í ¾äÀüÈ÷ Á¦ ¹æ¿¡¸¸ ÀÖ¾î¾ß ÇØ¿ä¡¦",1));
+        yield return StartCoroutine(NormalChat("ì•„ìœ¤", "ì ˆëŒ€ë¡œ ë‹¤ë¥¸ ë°© ê°€ì§€ ë§ê³  ì–Œì „íˆ ì œ ë°©ì—ë§Œ ìˆì–´ì•¼ í•´ìš”â€¦",1));
         
         ChatText.color = Color.blue;
-        yield return StartCoroutine(NormalChat("", "¶ì¶ì¶ì¶ì ¶ì·Î¸®",0));
+        yield return StartCoroutine(NormalChat("", "ë ë ë ë  ë ë¡œë¦¬",0));
         
         ChatText.color = Color.black;
         GameManager.Instance.backGroundImage.sprite = GameManager.Instance.backGround[6];
         GameManager.Instance.image1.sprite = GameManager.Instance.aYun[5];
-        yield return StartCoroutine(NormalChat("???", "¾ß¿ë~",1));
+        yield return StartCoroutine(NormalChat("???", "ì•¼ìš©~",1));
         
         ChatText.color = Color.blue;
-        yield return StartCoroutine(NormalChat("", "Áı¿¡ µé¾î°¡ÀÚ¸¶ÀÚ °í¾çÀÌ°¡ ¿©ÀÚ¾ÆÀÌ¸¦ ¹İ°å´Ù.",0));
+        yield return StartCoroutine(NormalChat("", "ì§‘ì— ë“¤ì–´ê°€ìë§ˆì ê³ ì–‘ì´ê°€ ì—¬ìì•„ì´ë¥¼ ë°˜ê²¼ë‹¤.",0));
         
-        yield return StartCoroutine(NormalChat("", "¿©ÀÚ ¾ÆÀÌ´Â °í¾çÀÌ¸¦ ¾î·ç¸¸Áö´Ù, ÀÚ±âÀÇ ¹æÀ¸·Î ¾È³»Çß´Ù.",0));
+        yield return StartCoroutine(NormalChat("", "ì—¬ì ì•„ì´ëŠ” ê³ ì–‘ì´ë¥¼ ì–´ë£¨ë§Œì§€ë‹¤, ìê¸°ì˜ ë°©ìœ¼ë¡œ ì•ˆë‚´í–ˆë‹¤.",0));
         ChatText.color = Color.black;
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[0];
         GameManager.Instance.image1.sprite = GameManager.Instance.aYun[4];
         
         ColorSet(2);
         GameManager.Instance.image1.sprite = GameManager.Instance.aYun[0];
-        yield return StartCoroutine(NormalChat("¾ÆÀ±", "¿ì¸® ¸¸³ª¼­ Åë¼º¸íµµ ¾È Çß´Âµ¥ ¸ÕÀú Åë¼º¸íÀÌ¶óµµ ÇØÁÖ½Ç·¡¿ä?",1));
+        yield return StartCoroutine(NormalChat("ì•„ìœ¤", "ìš°ë¦¬ ë§Œë‚˜ì„œ í†µì„±ëª…ë„ ì•ˆ í–ˆëŠ”ë° ë¨¼ì € í†µì„±ëª…ì´ë¼ë„ í•´ì£¼ì‹¤ë˜ìš”?",1));
         ColorSet(1);
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[6];
-        yield return StartCoroutine(NormalChat("ÅÂÇö", "´ç¿¬ÇÏÁÒ, Àú´Â ³ªÅÂÇö , 17»ì ÀÔ´Ï´Ù.",1));
+        yield return StartCoroutine(NormalChat("íƒœí˜„", "ë‹¹ì—°í•˜ì£ , ì €ëŠ” ë‚˜íƒœí˜„ , 17ì‚´ ì…ë‹ˆë‹¤.",1));
         ColorSet(2);
-        yield return StartCoroutine(NormalChat("¾ÆÀ±", "±×¸®°í ¾Æ±î °í¾çÀÌ´Â ¸Ş·Î¿¡¿ä.",1));
+        yield return StartCoroutine(NormalChat("ì•„ìœ¤", "ê·¸ë¦¬ê³  ì•„ê¹Œ ê³ ì–‘ì´ëŠ” ë©”ë¡œì—ìš”.",1));
         ColorSet(1);
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[4];
-        yield return StartCoroutine(NormalChat("ÅÂÇö", "³»°¡ ³ªÀÌ°¡ ¸¹À¸´Ï±ñ ¹İ¸»ÇØµµ ±¦ÂúÀ»±î?",1)); 
+        yield return StartCoroutine(NormalChat("íƒœí˜„", "ë‚´ê°€ ë‚˜ì´ê°€ ë§ìœ¼ë‹ˆê¹ ë°˜ë§í•´ë„ ê´œì°®ì„ê¹Œ?",1)); 
         ColorSet(2);
         GameManager.Instance.image1.sprite = GameManager.Instance.aYun[3];
-        yield return StartCoroutine(NormalChat("¾ÆÀ±", "³» , ¹°·ĞÀÌÁÒ",1));
+        yield return StartCoroutine(NormalChat("ì•„ìœ¤", "ë‚´ , ë¬¼ë¡ ì´ì£ ",1));
         GameManager.Instance.image1.sprite = GameManager.Instance.aYun[0];
-        yield return StartCoroutine(NormalChat("¾ÆÀ±", "±×·¡¼­ ¹«½¼ ÀÏÀÌ ÀÖ¾ú´ø °Å¿¡¿ä?",1));
+        yield return StartCoroutine(NormalChat("ì•„ìœ¤", "ê·¸ë˜ì„œ ë¬´ìŠ¨ ì¼ì´ ìˆì—ˆë˜ ê±°ì—ìš”?",1));
         ColorSet(1);
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[6];
-        yield return StartCoroutine(NormalChat("ÅÂÇö", "±×·¯´Ï±î..",1)); 
+        yield return StartCoroutine(NormalChat("íƒœí˜„", "ê·¸ëŸ¬ë‹ˆê¹Œ..",1)); 
         ChatText.color = Color.blue;
-        yield return StartCoroutine(NormalChat("", "³ª´Â ³»°¡ ±â¾ï³ª´Â ÀÏÀ» ¿¹±âÇØÁÖ¾ú´Ù.",0)); 
+        yield return StartCoroutine(NormalChat("", "ë‚˜ëŠ” ë‚´ê°€ ê¸°ì–µë‚˜ëŠ” ì¼ì„ ì˜ˆê¸°í•´ì£¼ì—ˆë‹¤.",0)); 
         ChatText.color = Color.black;
         ColorSet(2);
         GameManager.Instance.image1.sprite = GameManager.Instance.aYun[0];
-        yield return StartCoroutine(NormalChat("¾ÆÀ±", "°Å¡¦¤¡ °ÅÁş¸» ±×·± ÀÏÀÌ ÀÖ´Ù°í¿ä? ½ÇÁ¦·Î?",1));
+        yield return StartCoroutine(NormalChat("ì•„ìœ¤", "ê±°â€¦ã„± ê±°ì§“ë§ ê·¸ëŸ° ì¼ì´ ìˆë‹¤ê³ ìš”? ì‹¤ì œë¡œ?",1));
         ColorSet(1);
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[0];
-        yield return StartCoroutine(NormalChat("ÅÂÇö", "º¸´Ù½ÃÇÇ ¾Æ ¸ø º¸´Â±¸³ª ¾îÂ·µç ´Ù¸¥ »ç¶÷ ¹İÀÀ µé¾îº¸°í ¾Ë ¼ö ÀÖ¾ú°ÚÁö¸¸¡¦ ÁøÂ¥¾ß",1)); 
+        yield return StartCoroutine(NormalChat("íƒœí˜„", "ë³´ë‹¤ì‹œí”¼ ì•„ ëª» ë³´ëŠ”êµ¬ë‚˜ ì–´ì¨Œë“  ë‹¤ë¥¸ ì‚¬ëŒ ë°˜ì‘ ë“¤ì–´ë³´ê³  ì•Œ ìˆ˜ ìˆì—ˆê² ì§€ë§Œâ€¦ ì§„ì§œì•¼",1)); 
         ColorSet(2);
         GameManager.Instance.image1.sprite = GameManager.Instance.aYun[3];
-        yield return StartCoroutine(NormalChat("¾ÆÀ±", "Àú ±×·¡µµ ¾î´À Á¤µµ´Â º¸ÀÌ°Åµç¿ä!",1));
+        yield return StartCoroutine(NormalChat("ì•„ìœ¤", "ì € ê·¸ë˜ë„ ì–´ëŠ ì •ë„ëŠ” ë³´ì´ê±°ë“ ìš”!",1));
         ColorSet(1);
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[6];
-        yield return StartCoroutine(NormalChat("ÅÂÇö", "¾Æ, ¹Ì¾È ¹Ì¾È ±×·± ÀÇ¹Ì¿¡¼­ µµ¿ÍÁÙ ¼ö ÀÖÀ»±î?",1)); 
+        yield return StartCoroutine(NormalChat("íƒœí˜„", "ì•„, ë¯¸ì•ˆ ë¯¸ì•ˆ ê·¸ëŸ° ì˜ë¯¸ì—ì„œ ë„ì™€ì¤„ ìˆ˜ ìˆì„ê¹Œ?",1)); 
         ColorSet(2);
         ChatText.color = Color.blue;
-        yield return StartCoroutine(NormalChat("", "¾ÆÀ±ÀÌ´Â Àá½Ã °í¹ÎÇÏ´Ù ¸»Çß´Ù.",0));
+        yield return StartCoroutine(NormalChat("", "ì•„ìœ¤ì´ëŠ” ì ì‹œ ê³ ë¯¼í•˜ë‹¤ ë§í–ˆë‹¤.",0));
         ChatText.color = Color.black;
         GameManager.Instance.image1.sprite = GameManager.Instance.aYun[3];
-        yield return StartCoroutine(NormalChat("¾ÆÀ±", "Áö±İ ÇöÀç·Î¼­´Â Àú ¸»°í´Â µµ¿ÍÁÖ°Å³ª º¼ ¼ö ÀÖ´Â »ç¶÷ÀÌ ¾ø´Â °Å °°¡¦ÁÒ?",1));
+        yield return StartCoroutine(NormalChat("ì•„ìœ¤", "ì§€ê¸ˆ í˜„ì¬ë¡œì„œëŠ” ì € ë§ê³ ëŠ” ë„ì™€ì£¼ê±°ë‚˜ ë³¼ ìˆ˜ ìˆëŠ” ì‚¬ëŒì´ ì—†ëŠ” ê±° ê°™â€¦ì£ ?",1));
         ColorSet(1);
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[0];
-        yield return StartCoroutine(NormalChat("ÅÂÇö", "ÀÏ´ÜÀº. ¡¦",1));
+        yield return StartCoroutine(NormalChat("íƒœí˜„", "ì¼ë‹¨ì€. â€¦",1));
         ColorSet(2);
         GameManager.Instance.image1.sprite = GameManager.Instance.aYun[0];
-        yield return StartCoroutine(NormalChat("¾ÆÀ±", "¾Ë¾Ò¾î¿ä µµ¿ÍÁÙ°Ô¿ä.. ±Ùµ¥ Àú¿¡°Ô À§ÇèÇÏ°Å³ª ¹«¸®ÀÎ °Ç Àı´ë Àı´ë ¾È ÇÒ°Å¿¡¿ä!",1));
+        yield return StartCoroutine(NormalChat("ì•„ìœ¤", "ì•Œì•˜ì–´ìš” ë„ì™€ì¤„ê²Œìš”.. ê·¼ë° ì €ì—ê²Œ ìœ„í—˜í•˜ê±°ë‚˜ ë¬´ë¦¬ì¸ ê±´ ì ˆëŒ€ ì ˆëŒ€ ì•ˆ í• ê±°ì—ìš”!",1));
         ColorSet(1);
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[6];
-        yield return StartCoroutine(NormalChat("ÅÂÇö", "³» ½ÃÃ¼ Ã£´Â °É µµ¿ÍÁÙ ¼ö ÀÖÀ»±î?",1));
+        yield return StartCoroutine(NormalChat("íƒœí˜„", "ë‚´ ì‹œì²´ ì°¾ëŠ” ê±¸ ë„ì™€ì¤„ ìˆ˜ ìˆì„ê¹Œ?",1));
         ColorSet(2);
         GameManager.Instance.image1.sprite = GameManager.Instance.aYun[0];
-        yield return StartCoroutine(NormalChat("¾ÆÀ±", "¤µ,½ÃÃ¼¿ä?!",1));
+        yield return StartCoroutine(NormalChat("ì•„ìœ¤", "ã……,ì‹œì²´ìš”?!",1));
         ColorSet(1);
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[3];
-        yield return StartCoroutine(NormalChat("ÅÂÇö", "ÀÀ, ³» ½ÃÃ¼¸»ÀÌ¾ß.",1));
+        yield return StartCoroutine(NormalChat("íƒœí˜„", "ì‘, ë‚´ ì‹œì²´ë§ì´ì•¼.",1));
         ColorSet(2);
         GameManager.Instance.image1.sprite = GameManager.Instance.aYun[3];
-        yield return StartCoroutine(NormalChat("¾ÆÀ±", "À¢ ½ÃÃ¼¿ä? È¤½Ã Á×¾ú¾î¿ä? À¯·ÉÀÌ¿¡¿ä?",1));
+        yield return StartCoroutine(NormalChat("ì•„ìœ¤", "ì›¬ ì‹œì²´ìš”? í˜¹ì‹œ ì£½ì—ˆì–´ìš”? ìœ ë ¹ì´ì—ìš”?",1));
         ColorSet(1);
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[3];
-        yield return StartCoroutine(NormalChat("ÅÂÇö", "¾Æ´Ï.. È®½ÇÇÏÁø ¾Ê¾Æ ±Ù´ë ¿ØÁö ÀÖÀ» °Í °°¾Æ. ±×°É Ã£À¸¸é µ¹¾Æ¿Ã °Å °°±âµµ ÇÏ°í",1));
+        yield return StartCoroutine(NormalChat("íƒœí˜„", "ì•„ë‹ˆ.. í™•ì‹¤í•˜ì§„ ì•Šì•„ ê·¼ëŒ€ ì™ ì§€ ìˆì„ ê²ƒ ê°™ì•„. ê·¸ê±¸ ì°¾ìœ¼ë©´ ëŒì•„ì˜¬ ê±° ê°™ê¸°ë„ í•˜ê³ ",1));
         ColorSet(2);
-        yield return StartCoroutine(NormalChat("¾ÆÀ±", "¡¦. ¾Ë¾Ò¾î¿ä ±×·³ ½ÃÃ¼ Ã£´Â µ¿¾È¿¡´Â ²À Àú µµ¿ÍÁÖ¼Å¾ß µÅ¿ä. Àúµµ ÇÊ¿äÇÏ°Åµç¿ä ¶Ç ´Ù¸¥ ´«ÀÌ ÇÊ¿ä ÇÏ°Åµç¿ä", 1));
+        yield return StartCoroutine(NormalChat("ì•„ìœ¤", "â€¦. ì•Œì•˜ì–´ìš” ê·¸ëŸ¼ ì‹œì²´ ì°¾ëŠ” ë™ì•ˆì—ëŠ” ê¼­ ì € ë„ì™€ì£¼ì…”ì•¼ ë¼ìš”. ì €ë„ í•„ìš”í•˜ê±°ë“ ìš” ë˜ ë‹¤ë¥¸ ëˆˆì´ í•„ìš” í•˜ê±°ë“ ìš”", 1));
         ColorSet(1);
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[4];
-        yield return StartCoroutine(NormalChat("ÅÂÇö", "±×·¡ ! ¹°·ĞÀÌÁö",1));
+        yield return StartCoroutine(NormalChat("íƒœí˜„", "ê·¸ë˜ ! ë¬¼ë¡ ì´ì§€",1));
         ColorSet(2);
         GameManager.Instance.image1.sprite = GameManager.Instance.aYun[0];
-        yield return StartCoroutine(NormalChat("¾ÆÀ±", "±×·¯¸é ¸ÕÀú Àú ÆíÀÇÁ¡¿¡ °¡¼­ À½·á¼ö »ç´Â °Å µµ¿ÍÁÖ¼¼¿ä. \r\n ¸à³¯ ¿øÇÏ´Â°Å ¸ø »ò´Ü ¸»ÀÌ¿¡¿ä",1));
+        yield return StartCoroutine(NormalChat("ì•„ìœ¤", "ê·¸ëŸ¬ë©´ ë¨¼ì € ì € í¸ì˜ì ì— ê°€ì„œ ìŒë£Œìˆ˜ ì‚¬ëŠ” ê±° ë„ì™€ì£¼ì„¸ìš”. \r\n ë©˜ë‚  ì›í•˜ëŠ”ê±° ëª» ìƒ€ë‹¨ ë§ì´ì—ìš”",1));
         ColorSet(1);
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[6];
-        yield return StartCoroutine(NormalChat("ÅÂÇö", "¿Ö? ±×°Ç Á¡ÀÚµµ ÀÖÁö ¾Ê¾Æ?",1));
+        yield return StartCoroutine(NormalChat("íƒœí˜„", "ì™œ? ê·¸ê±´ ì ìë„ ìˆì§€ ì•Šì•„?",1));
         ColorSet(2);
         GameManager.Instance.image1.sprite = GameManager.Instance.aYun[4];
-        yield return StartCoroutine(NormalChat("¾ÆÀ±", ":¿ª½Ã ±×·¸°Ô »ı°¢ÇÏ°í ÀÖÀ» ÁÙ ¾Ë¾Ò¾î. ¾Æ½±°Ôµµ Á¦°¡ ÀĞ´Â Á¡ÀÚ¿¡´Â",1));
+        yield return StartCoroutine(NormalChat("ì•„ìœ¤", ":ì—­ì‹œ ê·¸ë ‡ê²Œ ìƒê°í•˜ê³  ìˆì„ ì¤„ ì•Œì•˜ì–´. ì•„ì‰½ê²Œë„ ì œê°€ ì½ëŠ” ì ìì—ëŠ”",1));
         GameManager.Instance.image1.sprite = GameManager.Instance.aYun[0];
-        yield return StartCoroutine(NormalChat("¾ÆÀ±", "À½·á¼öµéÀº º¸Åë Åº»ê ¾Æ´Ï¸é ÀÌ¿Â ÀÌ·± ½ÄÀ¸·Î ÀûÇôÀÖ¾î¿ä",1));
+        yield return StartCoroutine(NormalChat("ì•„ìœ¤", "ìŒë£Œìˆ˜ë“¤ì€ ë³´í†µ íƒ„ì‚° ì•„ë‹ˆë©´ ì´ì˜¨ ì´ëŸ° ì‹ìœ¼ë¡œ ì í˜€ìˆì–´ìš”",1));
         ColorSet(1);
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[4];
-        yield return StartCoroutine(NormalChat("ÅÂÇö", " ÁøÂ¥? Ã³À½ ¾Ë¾Ò´Âµ¥ ¸» ¸¸ÇØ ¿À´ÃÀº ³»°¡ µµ¿ÍÁÙ°Ô.",1));
+        yield return StartCoroutine(NormalChat("íƒœí˜„", " ì§„ì§œ? ì²˜ìŒ ì•Œì•˜ëŠ”ë° ë§ ë§Œí•´ ì˜¤ëŠ˜ì€ ë‚´ê°€ ë„ì™€ì¤„ê²Œ.",1));
         ColorSet(4);
         GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[5];
         GameManager.Instance.image1.sprite = GameManager.Instance.naTehyeon[5];
         ChatText.color = Color.blue;
-        yield return StartCoroutine(NormalChat("", "Áı ¹ÛÀ¸·Î ³ª°£´Ù", 0));
+        yield return StartCoroutine(NormalChat("", "ì§‘ ë°–ìœ¼ë¡œ ë‚˜ê°„ë‹¤", 0));
         
         GameManager.Instance.backGroundImage.sprite = GameManager.Instance.backGround[2];
-        yield return StartCoroutine(NormalChat("", "Áı ¹ÛÀº À§ÇèÇØ!! ÆíÀÇÁ¡À» °¡°í ½Í¾îÇÏ´Â ¾ÆÀ±ÀÌ¸¦ À§ÇØ ÆíÀÇÁ¡ ±îÁö ¹«»çÇÏ°Ô ´ë·Á´Ù ÁÖ¼¼¿ä",0));
+        yield return StartCoroutine(NormalChat("", "ì§‘ ë°–ì€ ìœ„í—˜í•´!! í¸ì˜ì ì„ ê°€ê³  ì‹¶ì–´í•˜ëŠ” ì•„ìœ¤ì´ë¥¼ ìœ„í•´ í¸ì˜ì  ê¹Œì§€ ë¬´ì‚¬í•˜ê²Œ ëŒ€ë ¤ë‹¤ ì£¼ì„¸ìš”",0));
         ChatText.color = Color.black;
         SceneManager.LoadScene(1);
         
@@ -489,8 +505,8 @@ public class ChatManager : MonoBehaviour
         
         
             
-        yield return StartCoroutine(NormalChat("¾ÆÀ±", "",1));
-        yield return StartCoroutine(NormalChat("ÅÂÇö", "",1));
+        yield return StartCoroutine(NormalChat("ì•„ìœ¤", "",1));
+        yield return StartCoroutine(NormalChat("íƒœí˜„", "",1));
 
         
         
@@ -503,7 +519,7 @@ public class ChatManager : MonoBehaviour
     }
     void Start()
     {
-        GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[5]; // »èÁ¦ 
+        GameManager.Instance.image2.sprite = GameManager.Instance.naTehyeon[5]; // ì‚­ì œ 
         StartCoroutine(TextPractice());
         NameBoxChecker = true;
     }
@@ -542,4 +558,5 @@ public class ChatManager : MonoBehaviour
             GameManager.Instance.image2.color = new Color(255, 255, 255, 0.5f);
         }
     }
+    
 }
